@@ -1,0 +1,22 @@
+{
+  "name": "happy-compiler",
+  "displayName": "Happy Compiler",
+  "description": "Показывает весёлую или грустную картинку после компиляции кода.",
+  "version": "1.0.0",
+  "publisher": "YourName",
+  "engines": {
+    "vscode": "^1.50.0"
+  },
+  "activationEvents": [
+    "onCommand:happy-compiler.run"
+  ],
+  "main": "./extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "happy-compiler.run",
+        "title": "😄 Run Happy Compiler"
+      }
+    ]
+  }
+}
