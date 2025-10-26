@@ -1,4 +1,6 @@
 const vscode = require('vscode');
+const cp = require('child_process');
+const path = require('path');
 
 function activate(context) {
   let disposable =
@@ -9,7 +11,7 @@ function activate(context) {
           return;
         }
 
-        const fileText = editor.document.getText();
+        const filePath = editor.document.fileName;
 
         const panel = vscode.window.createWebviewPanel(
             'happyCompiler', 'Happy Compiler 😊', vscode.ViewColumn.One, {
@@ -23,14 +25,20 @@ function activate(context) {
         const sadImg = panel.webview.asWebviewUri(
             vscode.Uri.joinPath(context.extensionUri, 'media', 'sad.png'));
 
-        // Простая проверка: если в коде есть "error" или "Ошибка", то ошибка
-        if (fileText.includes('error') || fileText.includes('Ошибка')) {
-          panel.webview.html =
-              getWebviewContent(sadImg, '😢 Ошибка компиляции');
-        } else {
-          panel.webview.html =
-              getWebviewContent(happyImg, '🎉 Компиляция успешна!');
-        }
+        // Запускаем компиляцию через gcc (или g++)
+        cp.exec(
+            `gcc "${filePath}" -o "${filePath}.out"`,
+            (error, stdout, stderr) => {
+              if (error) {
+                // Компиляция не удалась
+                panel.webview.html =
+                    getWebviewContent(sadImg, '😢 Компиляция не удалась!');
+              } else {
+                // Компиляция успешна
+                panel.webview.html =
+                    getWebviewContent(happyImg, '🎉 Компиляция успешна!');
+              }
+            });
       });
 
   context.subscriptions.push(disposable);
