@@ -1,9 +1,9 @@
 {
   "name": "happy-compiler",
   "displayName": "Happy Compiler",
-  "description": "Показывает весёлую или грустную картинку после компиляции кода.",
+  "description": "Плагин, который показывает счастливую картинку при успешной компиляции и грустную при ошибке.",
   "version": "1.0.0",
-  "publisher": "YourName",
+  "publisher": "MargaritaIvanova",
   "engines": {
     "vscode": "^1.50.0"
   },
@@ -15,7 +15,7 @@
     "commands": [
       {
         "command": "happy-compiler.run",
-        "title": "😄 Run Happy Compiler"
+        "title": "Run Happy Compiler"
       }
     ]
   }
